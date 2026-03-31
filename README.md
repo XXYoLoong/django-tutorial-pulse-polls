@@ -6,7 +6,13 @@
 
 - 姓名：倪家诚
 - English Name: Ni Jiacheng
+- GitHub：XXYoLoong / 游龙
 - 日期：2026-03-31
+
+## CSDN 文章
+
+- 文章标题：`Django项目实战：手把手实现一个双语投票网站并发布到 GitHub，附完整代码与部署说明`
+- CSDN 链接：`待发布后补充`
 
 ## 项目亮点
 

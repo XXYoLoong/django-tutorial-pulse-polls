@@ -40,7 +40,7 @@ Django项目实践：基于官方Tutorial构建双语投票网站 Pulse Polls
 ### 1. 本地环境
 
 - 操作系统：Windows
-- 工作目录：`f:\YL-Workspace\Z-1`
+- 项目目录：项目根目录
 - Python：`3.14.3`
 - pip：`25.3`
 
