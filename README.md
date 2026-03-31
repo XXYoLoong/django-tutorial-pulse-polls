@@ -17,6 +17,20 @@
 - 内置 6 组轻松、安全、无争议的双语投票题目
 - 提供 `seed_polls` 命令，可一键重建演示数据
 
+## 项目截图
+
+### 网站主页
+
+![网站主页](./assets/screenshot-home-zh.png)
+
+### 投票详情页
+
+![投票详情页](./assets/screenshot-detail-zh.png)
+
+### Django 后台界面
+
+![后台界面](./assets/screenshot-admin-zh.png)
+
 ## 环境要求
 
 - Python 3.14.3
@@ -56,6 +70,7 @@ python -m venv .venv
 
 ```text
 Z-1/
+├─ assets/
 ├─ mysite/
 ├─ polls/
 ├─ demo.md
