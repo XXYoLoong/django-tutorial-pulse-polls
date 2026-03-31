@@ -399,3 +399,31 @@
 
 - 用户名：`admin`
 - 密码：`Admin123456!`
+
+## 步骤 20：初始化 Git 并上传到 GitHub
+
+- 初始化本地 Git 仓库：
+  - `git init -b main`
+- 检查本机 Git 配置：
+  - 用户名：`Ni`
+  - 邮箱：`2561889884@qq.com`
+- 创建首个提交：
+  - `git add .`
+  - `git commit -m "Initial Django tutorial bilingual polls project"`
+- 通过 GitHub API 新建远端仓库：
+  - 仓库名：`django-tutorial-pulse-polls`
+  - GitHub 用户：`XXYoLoong`
+  - 仓库地址：`https://github.com/XXYoLoong/django-tutorial-pulse-polls`
+- 配置远端并推送：
+  - `git remote add origin https://github.com/XXYoLoong/django-tutorial-pulse-polls.git`
+  - `git push -u origin main`
+- 结果：
+  - 本地 `main` 分支已成功推送到 GitHub
+  - `origin/main` 已建立追踪关系
+
+## 当前交付状态
+
+- 项目代码已整理为 Git 仓库
+- GitHub 远端仓库已创建并推送完成
+- `README.md`、`README.en.md`、`demo.md`、`LICENSE` 已补齐
+- 作者和日期信息已写入文档
