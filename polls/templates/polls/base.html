@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Pulse Polls{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'polls/style.css' %}">
+</head>
+<body class="site-body">
+<div class="site-shell">
+    <header class="site-header">
+        <a class="brand" href="{% url 'polls:index' %}">
+            <span class="brand-mark">P</span>
+            <div>
+                <p class="brand-title">Pulse Polls</p>
+                <p class="brand-subtitle" data-i18n-zh="轻松有趣的双语投票站" data-i18n-en="A playful bilingual polling space">轻松有趣的双语投票站</p>
+            </div>
+        </a>
+        <div class="toolbar">
+            <a class="toolbar-link" href="{% url 'polls:index' %}" data-i18n-zh="首页" data-i18n-en="Home">首页</a>
+            <a class="toolbar-link" href="/admin/" data-i18n-zh="后台" data-i18n-en="Admin">后台</a>
+            <button class="lang-toggle" type="button" id="lang-toggle" aria-label="Switch language">
+                <span>中</span>
+                <span>/</span>
+                <span>EN</span>
+            </button>
+        </div>
+    </header>
+    {% block content %}{% endblock %}
+</div>
+<script src="{% static 'polls/app.js' %}"></script>
+</body>
+</html>

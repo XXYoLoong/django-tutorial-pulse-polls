@@ -1,0 +1,46 @@
+{% extends "polls/base.html" %}
+
+{% block title %}{{ question.question_text }}{% endblock %}
+
+{% block content %}
+<main class="panel">
+    <div class="panel-header">
+        <a class="back-link" href="{% url 'polls:index' %}" data-i18n-zh="← 返回投票列表" data-i18n-en="← Back to poll list">← 返回投票列表</a>
+        <span class="pill">{{ question.total_votes }} <span data-i18n-zh="票已投出" data-i18n-en="votes cast">票已投出</span></span>
+    </div>
+    <h1 class="panel-title"
+        data-i18n-zh="{{ question.question_text }}"
+        data-i18n-en="{{ question.question_text_en|default:question.question_text }}">
+        {{ question.question_text }}
+    </h1>
+    <p class="panel-description"
+       data-i18n-zh="{{ question.description|default:'请选择一个最贴近你的选项。' }}"
+       data-i18n-en="{{ question.description_en|default:question.description|default:'Pick the option that matches you best.' }}">
+        {{ question.description|default:"请选择一个最贴近你的选项。" }}
+    </p>
+    <form action="{% url 'polls:vote' question.id %}" method="post" class="choice-form">
+    {% csrf_token %}
+    <fieldset class="choice-fieldset">
+        <legend data-i18n-zh="请选择一个选项" data-i18n-en="Choose one option">请选择一个选项</legend>
+        {% if error_message %}
+            <p class="form-error" data-i18n-zh="{{ error_message }}" data-i18n-en="Please select one option before submitting.">{{ error_message }}</p>
+        {% endif %}
+        <div class="choice-list">
+        {% for choice in question.choice_set.all %}
+            <label class="choice-card" for="choice{{ forloop.counter }}">
+                <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+                <span class="choice-copy">
+                    <strong data-i18n-zh="{{ choice.choice_text }}" data-i18n-en="{{ choice.choice_text_en|default:choice.choice_text }}">{{ choice.choice_text }}</strong>
+                    <small data-i18n-zh="点击选择这个答案" data-i18n-en="Tap to choose this option">点击选择这个答案</small>
+                </span>
+            </label>
+        {% endfor %}
+        </div>
+    </fieldset>
+    <div class="action-row">
+        <input class="primary-btn" type="submit" value="投票" data-submit-zh="投票" data-submit-en="Vote now">
+        <a class="secondary-link" href="{% url 'polls:results' question.id %}" data-i18n-zh="直接看结果" data-i18n-en="See results first">直接看结果</a>
+    </div>
+    </form>
+</main>
+{% endblock %}

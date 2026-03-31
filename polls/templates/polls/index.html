@@ -1,0 +1,56 @@
+{% extends "polls/base.html" %}
+
+{% block title %}Pulse Polls{% endblock %}
+
+{% block content %}
+<main class="hero-card">
+    <div class="hero-copy">
+        <p class="eyebrow">Django 6.0 Tutorial Project</p>
+        <h1 data-i18n-zh="今天想投哪一票？" data-i18n-en="Which vibe gets your vote today?">今天想投哪一票？</h1>
+        <p class="hero-text" data-i18n-zh="灵感参考知乎上常见的学习、生活、旅行和兴趣社区话题，做成了几组轻松、无争议、适合作业展示的互动投票。" data-i18n-en="Inspired by light-hearted Zhihu discussions around learning, life, travel, and hobbies, these polls are designed to stay friendly, playful, and presentation-ready.">灵感参考知乎上常见的学习、生活、旅行和兴趣社区话题，做成了几组轻松、无争议、适合作业展示的互动投票。</p>
+    </div>
+    <div class="hero-badge-grid">
+        <div class="hero-badge" data-i18n-zh="多主题投票" data-i18n-en="Multi-theme polls">多主题投票</div>
+        <div class="hero-badge" data-i18n-zh="中英双语" data-i18n-en="Bilingual UI">中英双语</div>
+        <div class="hero-badge" data-i18n-zh="实时结果" data-i18n-en="Live results">实时结果</div>
+    </div>
+</main>
+
+{% if latest_question_list %}
+    <section class="question-grid">
+    {% for question in latest_question_list %}
+        <article class="question-card">
+            <p class="question-meta">
+                <span data-i18n-zh="投票 {{ forloop.counter }}" data-i18n-en="Poll {{ forloop.counter }}">投票 {{ forloop.counter }}</span>
+                <span class="meta-dot"></span>
+                <span>{{ question.pub_date|date:"Y-m-d" }}</span>
+            </p>
+            <h2 class="question-title">
+                <a href="{% url 'polls:detail' question.id %}"
+                   data-i18n-zh="{{ question.question_text }}"
+                   data-i18n-en="{{ question.question_text_en|default:question.question_text }}">
+                    {{ question.question_text }}
+                </a>
+            </h2>
+            <p class="question-description"
+               data-i18n-zh="{{ question.description|default:'来看看大家的选择。' }}"
+               data-i18n-en="{{ question.description_en|default:question.description|default:'See how everyone votes.' }}">
+                {{ question.description|default:"来看看大家的选择。" }}
+            </p>
+            <div class="question-footer">
+                <span class="pill">
+                    {{ question.choice_set.count }}
+                    <span data-i18n-zh="个选项" data-i18n-en="choices">个选项</span>
+                </span>
+                <span class="pill">
+                    {{ question.total_votes }}
+                    <span data-i18n-zh="票" data-i18n-en="votes">票</span>
+                </span>
+            </div>
+        </article>
+    {% endfor %}
+    </section>
+{% else %}
+    <p class="polls-empty" data-i18n-zh="当前还没有可用投票。" data-i18n-en="No polls are available right now.">当前还没有可用投票。</p>
+{% endif %}
+{% endblock %}

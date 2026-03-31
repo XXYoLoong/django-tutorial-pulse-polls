@@ -1,0 +1,33 @@
+{% extends "polls/base.html" %}
+
+{% block title %}投票结果{% endblock %}
+
+{% block content %}
+<main class="panel">
+    <div class="panel-header">
+        <a class="back-link" href="{% url 'polls:detail' question.id %}" data-i18n-zh="← 返回投票" data-i18n-en="← Back to voting">← 返回投票</a>
+        <span class="pill">{{ question.total_votes }} <span data-i18n-zh="总票数" data-i18n-en="total votes">总票数</span></span>
+    </div>
+    <h1 class="panel-title"
+        data-i18n-zh="{{ question.question_text }}"
+        data-i18n-en="{{ question.question_text_en|default:question.question_text }}">
+        {{ question.question_text }}
+    </h1>
+    <div class="results-list">
+    {% for choice in question.choice_set.all %}
+        <article class="result-card">
+            <div class="result-head">
+                <strong data-i18n-zh="{{ choice.choice_text }}" data-i18n-en="{{ choice.choice_text_en|default:choice.choice_text }}">{{ choice.choice_text }}</strong>
+                <span>{{ choice.votes }} <span data-i18n-zh="票" data-i18n-en="votes">票</span></span>
+            </div>
+            <div class="result-bar">
+                <span style="width:{% if question.total_votes %}{% widthratio choice.votes question.total_votes 100 %}{% else %}0{% endif %}%"></span>
+            </div>
+            <p class="result-foot">
+                {% if question.total_votes %}{% widthratio choice.votes question.total_votes 100 %}{% else %}0{% endif %}%
+            </p>
+        </article>
+    {% endfor %}
+    </div>
+</main>
+{% endblock %}
