@@ -1,429 +1,337 @@
-# Django Tutorial 实践记录
+# Django项目实践：基于官方Tutorial构建双语投票网站 Pulse Polls
 
-## 项目说明
+## 一、项目概述
 
-- 工作区：`f:\YL-Workspace\Z-1`
-- 作者：倪家诚 / Ni Jiacheng
+### 1. 项目名称
+
+Django项目实践：基于官方Tutorial构建双语投票网站 Pulse Polls
+
+### 2. 作者信息
+
+- 姓名：倪家诚
+- 英文名：Ni Jiacheng
 - 日期：2026-03-31
-- 目标：按照 Django 官方教程 `https://docs.djangoproject.com/zh-hans/6.0/intro/` 完成示例项目，并尽量执行到最后一步。
-- 记录原则：每完成一个阶段，就在本文件追加实际操作、生成文件和验证结果。
+- GitHub：`https://github.com/XXYoLoong/django-tutorial-pulse-polls`
 
-## 步骤 1：初始环境检查
+### 3. 项目背景
 
-- 检查当前工作区内容，结果显示目录当前基本为空。
-- 检查 Python 版本：`Python 3.14.3`
-- 检查 `py` 版本：`Python 3.14.3`
-- 检查 `pip` 版本：`pip 25.3`
-- 查询可安装 Django 版本，确认官方源可获取 `Django 6.0.3`
-- 查阅 Django 官方文档首页，确认本次以 `Django 6.0` 中文教程为主线实现。
+本项目以 Django 官方中文文档 `https://docs.djangoproject.com/zh-hans/6.0/intro/` 为实践主线，在完成官网 Tutorial 基础功能的前提下，进一步将原始示例扩展为一个适合作业展示和演示汇报的双语投票网站。
 
-## 当前结论
+项目不仅完成了官方教程中的模型、视图、模板、路由、后台管理、测试等基础内容，还进行了以下扩展：
 
-- 可以继续在当前目录中直接构建项目。
-- 下一步将创建虚拟环境、安装 Django，并开始按 tutorial 搭建项目。
+- 支持中英双语界面切换
+- 重构首页、详情页、结果页 UI
+- 增加更丰富、更安全、更适合作业展示的投票主题
+- 提供一键生成演示数据的管理命令
+- 补全文档、许可证、Git 仓库和 GitHub 发布流程
 
-## 步骤 2：创建虚拟环境并安装依赖
+## 二、项目目标
 
-- 在项目根目录执行：`python -m venv .venv`
-- 确认生成目录：`.venv/Include`、`.venv/Lib`、`.venv/Scripts`
-- 在虚拟环境中安装 Django：`.\.venv\Scripts\python.exe -m pip install Django==6.0.3`
-- 安装完成后验证版本：`.\.venv\Scripts\python.exe -m django --version`
-- 验证结果：`6.0.3`
+本项目的目标包括：
 
-### 本阶段生成文件
+- 按照 Django 官网 Tutorial 完成完整项目实践
+- 理解 Django 的 MTV 架构和核心开发流程
+- 掌握模型设计、模板渲染、视图逻辑、URL 分发、后台管理和测试方法
+- 在官方示例基础上进行工程化和展示型升级
+- 形成可运行、可演示、可复现、可发布的完整作品
 
-- `.venv/`
-- `demo.md`
+## 三、开发环境
 
-## 步骤 3：初始化 Django 项目
+### 1. 本地环境
 
-- 使用官方命令在当前目录创建项目：`.\.venv\Scripts\django-admin.exe startproject mysite .`
-- 生成核心入口文件：`manage.py`
-- 生成项目配置目录：`mysite/`
-- 检查生成的初始配置文件：
-  - `mysite/settings.py`
-  - `mysite/urls.py`
-  - `mysite/asgi.py`
-  - `mysite/wsgi.py`
+- 操作系统：Windows
+- 工作目录：`f:\YL-Workspace\Z-1`
+- Python：`3.14.3`
+- pip：`25.3`
 
-### 本阶段新增文件
+### 2. 核心依赖
+
+- Django：`6.0.3`
+- django-debug-toolbar：`6.2.0`
+
+### 3. 项目地址
+
+- GitHub 仓库：`https://github.com/XXYoLoong/django-tutorial-pulse-polls`
+
+## 四、项目实施过程
+
+### 1. 环境检查与准备
+
+首先检查工作目录状态以及 Python、pip 和 Django 可用版本，确认本机具备创建 Django 6.0 项目的条件。
+
+执行的关键操作：
+
+- 检查当前目录内容
+- 检查 Python 版本
+- 检查 pip 版本
+- 查询 Django 可安装版本
+- 查阅 Django 官方中文文档
+
+结论：
+
+- 当前目录可直接作为项目工作区
+- Django 6.0.3 可正常安装
+
+### 2. 创建虚拟环境并安装依赖
+
+为了避免污染系统 Python 环境，在项目根目录下创建虚拟环境 `.venv`，然后安装 Django。
+
+关键命令：
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install Django==6.0.3
+.\.venv\Scripts\python.exe -m django --version
+```
+
+结果：
+
+- 成功创建 `.venv`
+- 成功安装 Django 6.0.3
+
+### 3. 初始化 Django 项目
+
+在当前目录中执行官方命令创建 Django 项目 `mysite`。
+
+关键命令：
+
+```powershell
+.\.venv\Scripts\django-admin.exe startproject mysite .
+```
+
+生成核心文件：
 
 - `manage.py`
-- `mysite/__init__.py`
-- `mysite/asgi.py`
 - `mysite/settings.py`
 - `mysite/urls.py`
+- `mysite/asgi.py`
 - `mysite/wsgi.py`
 
-## 步骤 4：创建 polls 应用并补全教程主体代码
+### 4. 创建 polls 应用并完成 Tutorial 主体功能
 
-- 创建应用：`.\.venv\Scripts\python.exe manage.py startapp polls`
-- 修改 `mysite/settings.py`
-  - 将 `polls.apps.PollsConfig` 加入 `INSTALLED_APPS`
-  - 设置 `LANGUAGE_CODE = "zh-hans"`
-  - 设置 `TIME_ZONE = "Asia/Shanghai"`
-- 修改 `mysite/urls.py`
-  - 挂载 `polls/` 路由
-- 编写 `polls/models.py`
-  - 创建 `Question`
-  - 创建 `Choice`
-  - 实现 `__str__()`
-  - 实现 `was_published_recently()`
-- 编写 `polls/views.py`
-  - 使用泛型视图实现 `IndexView`
-  - 使用泛型视图实现 `DetailView`
-  - 使用泛型视图实现 `ResultsView`
-  - 实现 `vote()` 提交逻辑
-- 新增 `polls/urls.py`
-  - 配置 `index`
-  - 配置 `detail`
-  - 配置 `results`
-  - 配置 `vote`
-- 编写模板
-  - `polls/templates/polls/index.html`
-  - `polls/templates/polls/detail.html`
-  - `polls/templates/polls/results.html`
-- 编写后台管理
-  - `polls/admin.py`
-  - 配置 `ChoiceInline`
-  - 配置 `QuestionAdmin`
-  - 配置 `fieldsets`、`list_display`、`list_filter`、`search_fields`
-- 编写测试
-  - `polls/tests.py`
-  - 覆盖模型测试、列表页测试、详情页测试
-- 编写静态文件
-  - `polls/static/polls/style.css`
-  - `polls/static/polls/images/background.gif`
-- 新增工程辅助文件
-  - `.gitignore`
-  - `requirements.txt`
+按照官网教程创建 `polls` 应用，并逐步补充模型、视图、模板和路由。
 
-### 本阶段新增或修改文件
+关键命令：
 
-- `.gitignore`
-- `requirements.txt`
-- `mysite/settings.py`
-- `mysite/urls.py`
-- `polls/__init__.py`
-- `polls/admin.py`
-- `polls/apps.py`
-- `polls/models.py`
-- `polls/tests.py`
-- `polls/views.py`
-- `polls/urls.py`
-- `polls/templates/polls/index.html`
-- `polls/templates/polls/detail.html`
-- `polls/templates/polls/results.html`
-- `polls/static/polls/style.css`
-- `polls/static/polls/images/background.gif`
-- `polls/migrations/__init__.py`
+```powershell
+.\.venv\Scripts\python.exe manage.py startapp polls
+```
 
-## 步骤 5：接入第 8 部分第三方包 django-debug-toolbar
+主要工作：
 
-- 根据 Django Tutorial 第 8 部分与官方安装文档，安装第三方调试工具栏。
-- 在 `requirements.txt` 中加入：`django-debug-toolbar==6.2.0`
-- 执行安装：`.\.venv\Scripts\python.exe -m pip install -r requirements.txt`
-- 修改 `mysite/settings.py`
-  - 新增 `TESTING = "test" in sys.argv`
-  - 非测试环境下自动将 `debug_toolbar` 加入 `INSTALLED_APPS`
-  - 非测试环境下自动将 `debug_toolbar.middleware.DebugToolbarMiddleware` 加入 `MIDDLEWARE`
-  - 新增 `INTERNAL_IPS = ["127.0.0.1"]`
-  - 针对 Windows 静态资源 MIME 类型问题，增加：
-    - `import mimetypes`
-    - `mimetypes.add_type("application/javascript", ".js", True)`
-- 修改 `mysite/urls.py`
-  - 非测试环境下通过 `debug_toolbar_urls()` 注入 `__debug__/` 调试路由
+- 在 `models.py` 中创建 `Question` 和 `Choice`
+- 在 `views.py` 中实现 `IndexView`、`DetailView`、`ResultsView` 和 `vote()`
+- 在 `urls.py` 中配置投票相关路由
+- 在模板中实现首页、详情页、结果页
+- 将 `polls` 注册到 `INSTALLED_APPS`
 
-### 本阶段修改文件
+### 5. 配置后台管理与静态资源
 
-- `requirements.txt`
-- `mysite/settings.py`
-- `mysite/urls.py`
+为了满足教程要求并提升项目完整性，对后台管理和静态文件进行了配置。
 
-## 步骤 6：生成迁移并初始化数据库
+主要工作：
 
-- 生成应用迁移：`.\.venv\Scripts\python.exe manage.py makemigrations polls`
-- 成功生成：
-  - `polls/migrations/0001_initial.py`
-- 执行数据库迁移：`.\.venv\Scripts\python.exe manage.py migrate`
-- 成功应用内置应用与 `polls` 的所有迁移
-- 生成 SQLite 数据库文件：`db.sqlite3`
+- 在 `admin.py` 中注册 `Question` 和 `Choice`
+- 配置后台列表显示、筛选和搜索
+- 添加样式文件和背景资源
 
-### 本阶段新增文件
+### 6. 接入 django-debug-toolbar
 
-- `polls/migrations/0001_initial.py`
-- `db.sqlite3`
+根据 Django Tutorial 第 8 部分，接入 `django-debug-toolbar` 作为第三方开发辅助工具。
 
-## 步骤 7：执行自动化测试
+主要工作：
 
-- 执行命令：`.\.venv\Scripts\python.exe manage.py test`
-- 测试结果：
-  - 发现测试数：`10`
-  - 结果：`OK`
-- 说明：
-  - `Question.was_published_recently()` 的未来时间、过旧时间、最近时间逻辑均通过
-  - `index` 页面只展示已发布投票的逻辑通过
-  - `detail` 页面对未来投票返回 404 的逻辑通过
+- 在 `requirements.txt` 中加入依赖
+- 在 `settings.py` 中配置 `INSTALLED_APPS`、`MIDDLEWARE` 和 `INTERNAL_IPS`
+- 在 `urls.py` 中挂载调试路由
 
-## 步骤 8：创建后台账户与示例数据
+说明：
 
-- 创建后台超级用户
-  - 用户名：`admin`
-  - 邮箱：`admin@example.com`
-  - 密码：`Admin123456!`
-- 使用 `manage.py shell -c` 写入示例问题与选项
-  - 问题：`What's new in Django 6.0?`
-  - 选项 1：`Async support improvements`
-  - 选项 2：`Better admin experience`
-  - 选项 3：`Cleaner tutorial flow`
-- 示例问题创建结果：`question_id=2`
+- 为避免影响测试，调试工具栏只在非测试模式下启用
 
-## 步骤 9：运行服务并进行页面联通性验证
+### 7. 生成迁移并初始化数据库
 
-- 启动本地开发服务器：
-  - `.\.venv\Scripts\python.exe manage.py runserver 127.0.0.1:8000 --noreload`
-- 使用 PowerShell 请求页面进行验证
-- 验证结果：
-  - `http://127.0.0.1:8000/polls/` 返回 `200`
-  - `http://127.0.0.1:8000/admin/login/` 返回 `200`
-- 说明：
-  - 项目已可正常启动
-  - 投票页与后台登录页已可访问
+模型完成后，执行迁移命令生成数据库结构。
 
-## 步骤 10：过程中的异常与处理
+关键命令：
 
-- 异常 1：
-  - 初次使用 `manage.py shell` 通过标准输入传入脚本时，当前环境进入了交互控制台，导致脚本没有按预期一次性执行。
-- 处理方式：
-  - 改为使用 `manage.py shell -c "..."` 重新执行。
-- 影响评估：
-  - 不影响后续步骤，问题已解决。
+```powershell
+.\.venv\Scripts\python.exe manage.py makemigrations polls
+.\.venv\Scripts\python.exe manage.py migrate
+```
 
-- 异常 2：
-  - 当前目录不是 Git 仓库，执行 `git status --short` 时提示 `fatal: not a git repository`
-- 处理方式：
-  - 未强行初始化 Git，因为这不是完成 tutorial 的必要条件。
-- 影响评估：
-  - 不影响项目运行、测试和作业交付。
+结果：
 
-## 当前项目文件清单
+- 成功生成 `0001_initial.py`
+- 成功创建并初始化 `db.sqlite3`
 
-- `.gitignore`
-- `demo.md`
-- `requirements.txt`
-- `manage.py`
-- `db.sqlite3`
-- `mysite/__init__.py`
-- `mysite/asgi.py`
-- `mysite/settings.py`
-- `mysite/urls.py`
-- `mysite/wsgi.py`
-- `polls/__init__.py`
-- `polls/admin.py`
-- `polls/apps.py`
-- `polls/models.py`
-- `polls/tests.py`
-- `polls/views.py`
-- `polls/urls.py`
-- `polls/migrations/__init__.py`
-- `polls/migrations/0001_initial.py`
-- `polls/templates/polls/index.html`
-- `polls/templates/polls/detail.html`
-- `polls/templates/polls/results.html`
-- `polls/static/polls/style.css`
-- `polls/static/polls/images/background.gif`
+### 8. 创建管理员账户与初始演示数据
 
-## 最终状态
+为了方便后台演示，创建了超级用户，并通过 shell 写入了一组初始示例数据。
 
-- Django 官方 tutorial 主体项目已完成。
-- 第 1 到第 7 部分所需的 `polls` 项目结构、模型、视图、模板、后台、测试、静态文件均已完成。
-- 第 8 部分第三方包 `django-debug-toolbar` 已安装并接入项目。
-- 数据库迁移已完成。
-- 自动化测试已全部通过。
-- 本地开发服务器已验证可以启动。
-
-## 步骤 11：修复根路径 404
-
-- 问题现象：
-  - 访问 `http://127.0.0.1:8000/` 时出现 404
-- 问题原因：
-  - 项目只配置了 `polls/`、`admin/` 和 `__debug__/` 路由，根路径 `/` 没有匹配规则
-- 处理方式：
-  - 修改 `mysite/urls.py`
-  - 为根路径 `""` 增加跳转逻辑，自动重定向到 `polls:index`
-- 修复结果：
-  - 访问根路径 `/` 会自动跳转到 `/polls/`
-
-## 步骤 12：清理重复示例数据
-
-- 问题现象：
-  - `polls/` 页面出现两条几乎相同的投票问题
-- 排查结果：
-  - 数据库中存在两条记录：
-    - `id=1`：`What's new in Django 6.0?`
-    - `id=2`：`Whats new in Django 6.0?`
-- 问题原因：
-  - 之前通过命令行写入示例数据时执行过两次，且其中一次题目文本缺少撇号，导致生成了重复记录
-- 处理方式：
-  - 保留 `id=1` 的正确记录
-  - 删除 `id=2` 的重复记录
-- 修复结果：
-  - 投票列表页只保留一条规范的示例问题
-
-## 步骤 13：修复详情页访问与优化首页展示
-
-- 问题现象：
-  - 用户访问 `http://127.0.0.1:8000/polls/1` 时显示 `Not Found`
-  - 首页列表页展示过于简陋，只有一行链接，不利于作业展示
-- 排查结果：
-  - 路由主规则使用的是带斜杠形式：`/polls/1/`
-  - 用户访问的是不带末尾斜杠的地址：`/polls/1`
-- 处理方式：
-  - 在 `polls/urls.py` 中增加不带末尾斜杠的兼容路由
-  - 优化 `polls/templates/polls/index.html`，增加标题、说明文案和更完整的页面结构
-  - 优化 `polls/templates/polls/detail.html` 与 `polls/templates/polls/results.html`
-  - 优化 `polls/static/polls/style.css`，让首页更适合作业展示
-- 修复结果：
-  - `polls/1` 和 `polls/1/` 都可以访问
-  - 首页从教程极简样式调整为更完整的展示页
-
-## 步骤 14：同步测试文案并补全示例选项
-
-- 问题现象：
-  - 页面文案改成中文后，自动化测试仍在检查英文提示语
-  - 当前示例问题缺少可投票选项，详情页功能展示不完整
-- 处理方式：
-  - 修改 `polls/tests.py`，将空状态断言更新为中文文案
-  - 给现有示例问题补充 3 个选项
-- 修复结果：
-  - 测试与页面展示保持一致
-  - 详情页可正常显示并提交投票
-
-## 步骤 15：升级为双语投票站并重构页面结构
-
-- 目标：
-  - 让页面更适合作业展示，而不是保留 tutorial 的最简页面
-  - 支持中英双语切换
-  - 丰富投票内容，提升互动性
-- 处理方式：
-  - 扩展 `Question` 和 `Choice` 模型，增加英文标题与描述字段
-  - 新增 `polls/templates/polls/base.html` 作为统一布局模板
-  - 重写首页、详情页、结果页模板
-  - 新增 `polls/static/polls/app.js`，通过 `localStorage` 保存中英切换状态
-  - 重写 `polls/static/polls/style.css`，升级为卡片化、玻璃拟态风格界面
-  - 在结果页加入投票比例条形图
-- 本阶段新增或修改文件：
-  - `polls/models.py`
-  - `polls/admin.py`
-  - `polls/views.py`
-  - `polls/templates/polls/base.html`
-  - `polls/templates/polls/index.html`
-  - `polls/templates/polls/detail.html`
-  - `polls/templates/polls/results.html`
-  - `polls/static/polls/style.css`
-  - `polls/static/polls/app.js`
-
-## 步骤 16：新增可重复执行的示例数据命令
-
-- 目标：
-  - 批量生成多组安全、轻松、适合展示的投票内容
-- 处理方式：
-  - 新增 Django 自定义命令：`python manage.py seed_polls`
-  - 命令会清空现有投票题目并重建一组新的双语示例投票
-- 题目方向：
-  - 周末方式
-  - 饮品选择
-  - 额外一小时如何使用
-  - 旅行准备
-  - 学习陪伴方式
-  - 日常小确幸
-- 参考原则：
-  - 只采用轻松、日常、无争议方向
-  - 适配知乎社区常见的学习、生活、兴趣类讨论氛围
-- 新增文件：
-  - `polls/management/__init__.py`
-  - `polls/management/commands/__init__.py`
-  - `polls/management/commands/seed_polls.py`
-
-## 步骤 17：执行双语字段迁移并写入新投票数据
-
-- 执行迁移：
-  - `python manage.py makemigrations polls`
-  - `python manage.py migrate`
-- 新生成迁移文件：
-  - `polls/migrations/0002_choice_choice_text_en_question_description_and_more.py`
-- 执行示例数据命令：
-  - `python manage.py seed_polls`
-- 写入结果：
-  - 共生成 `6` 组双语投票
-  - 共生成 `24` 个投票选项
-
-## 步骤 18：最终校验
-
-- 执行检查：
-  - `python manage.py check`
-  - `python manage.py test`
-- 验证结果：
-  - 系统检查通过
-  - 自动化测试 `10` 项全部通过
-- 页面联通性验证：
-  - `/polls/` 返回 `200`
-  - 首页渲染 `6` 个投票卡片
-  - `/polls/2/` 返回 `200`
-  - `/polls/2/results/` 返回 `200`
-  - 首页检测到语言切换按钮 `lang-toggle`
-
-## 本轮升级后的作业亮点
-
-- 保留 Django 官方 tutorial 的核心结构和功能
-- 将前端从教程极简页面升级为更完整的展示型界面
-- 支持中英双语切换
-- 投票内容扩展为多组轻松、日常、无争议话题
-- 通过 `seed_polls` 命令可以重复生成演示数据，便于作业展示和验收
-
-## 步骤 19：补全文档、许可证与作者信息
-
-- 新增或更新文档：
-  - `README.md`
-  - `README.en.md`
-  - `LICENSE`
-  - `demo.md`
-- 文档中补充的信息：
-  - 作者姓名：倪家诚 / Ni Jiacheng
-  - 日期：2026-03-31
-  - 项目启动方式
-  - 管理后台账号信息
-  - Apache License 2.0 许可证说明
-
-## 当前后台账号
+后台账号：
 
 - 用户名：`admin`
 - 密码：`Admin123456!`
 
-## 步骤 20：初始化 Git 并上传到 GitHub
+### 9. 修复首页和详情页访问问题
 
-- 初始化本地 Git 仓库：
-  - `git init -b main`
-- 检查本机 Git 配置：
-  - 用户名：`Ni`
-  - 邮箱：`2561889884@qq.com`
-- 创建首个提交：
-  - `git add .`
-  - `git commit -m "Initial Django tutorial bilingual polls project"`
-- 通过 GitHub API 新建远端仓库：
-  - 仓库名：`django-tutorial-pulse-polls`
-  - GitHub 用户：`XXYoLoong`
-  - 仓库地址：`https://github.com/XXYoLoong/django-tutorial-pulse-polls`
-- 配置远端并推送：
-  - `git remote add origin https://github.com/XXYoLoong/django-tutorial-pulse-polls.git`
-  - `git push -u origin main`
-- 结果：
-  - 本地 `main` 分支已成功推送到 GitHub
-  - `origin/main` 已建立追踪关系
+在项目运行过程中，先后发现两个常见问题：
 
-## 当前交付状态
+- 访问根路径 `/` 出现 404
+- 访问 `/polls/1` 时因为缺少尾部斜杠而显示 `Not Found`
 
-- 项目代码已整理为 Git 仓库
-- GitHub 远端仓库已创建并推送完成
-- `README.md`、`README.en.md`、`demo.md`、`LICENSE` 已补齐
-- 作者和日期信息已写入文档
+处理方法：
+
+- 在 `mysite/urls.py` 中为根路径添加跳转逻辑
+- 在 `polls/urls.py` 中兼容带斜杠与不带斜杠的访问
+
+### 10. 清理重复数据并补全测试
+
+在手工插入示例数据时，出现了重复问题目。后续进行了清理，并同步修正了测试文案与页面内容，使测试结果与页面表现保持一致。
+
+### 11. 项目升级为双语投票站
+
+在完成官网 Tutorial 基础功能后，对项目进行了展示型升级。
+
+升级内容包括：
+
+- 为 `Question` 和 `Choice` 增加英文标题字段
+- 为 `Question` 增加中英文描述字段
+- 新增统一布局模板 `base.html`
+- 重构首页、详情页、结果页
+- 增加中英双语切换按钮
+- 新增前端脚本 `app.js`
+- 将页面样式升级为卡片化展示风格
+- 在结果页中增加投票比例可视化
+
+### 12. 丰富投票内容
+
+为了使项目更适合作业展示，不再使用官方 Tutorial 原始那种单一示例问题，而是设计了 6 组轻松、有趣、无争议的投票内容。
+
+选题方向参考了中文社区中常见的日常讨论氛围，但避免了争议性、价值观冲突和道德风险题目，方向包括：
+
+- 理想周末方式
+- 饮品选择偏好
+- 多出一小时如何使用
+- 旅行前优先准备什么
+- 学习时喜欢的环境
+- 最能点亮一天的小确幸
+
+### 13. 新增一键生成演示数据命令
+
+为了让项目更工程化，也为了方便后续演示和复用，新增了 Django 自定义管理命令：
+
+```powershell
+.\.venv\Scripts\python.exe manage.py seed_polls
+```
+
+该命令会：
+
+- 清空现有投票题目
+- 重建 6 组双语投票
+- 自动生成 24 个选项
+
+### 14. 完成最终检查与测试
+
+最终使用以下命令验证项目可运行性：
+
+```powershell
+.\.venv\Scripts\python.exe manage.py check
+.\.venv\Scripts\python.exe manage.py test
+.\.venv\Scripts\python.exe manage.py runserver
+```
+
+验证结果：
+
+- `check` 通过
+- `test` 10 项全部通过
+- 首页、详情页、结果页均返回 `200`
+- 双语切换按钮可正常显示
+
+### 15. 补全文档、许可证与 GitHub 发布
+
+为方便作业提交和项目公开展示，新增并完善了以下文件：
+
+- `README.md`
+- `README.en.md`
+- `LICENSE`
+- `demo.md`
+
+许可证采用：
+
+- Apache License 2.0
+
+随后完成 Git 初始化、提交和 GitHub 仓库发布：
+
+- 本地仓库分支：`main`
+- GitHub 仓库：`https://github.com/XXYoLoong/django-tutorial-pulse-polls`
+
+## 五、项目核心成果
+
+### 1. 功能成果
+
+- 完成 Django 官网 Tutorial 核心功能
+- 支持投票列表页、详情页、结果页和后台管理
+- 支持提交投票并统计票数
+- 支持结果可视化展示
+- 支持中英双语切换
+
+### 2. 工程成果
+
+- 提供 `seed_polls` 数据生成命令
+- 提供中英文 README
+- 提供 Apache License 2.0 许可证
+- 完成 GitHub 仓库发布
+
+### 3. 展示成果
+
+- 页面风格比官网原始示例更适合作业汇报
+- 投票内容更加丰富，演示性更强
+- 文档记录完整，便于提交和答辩说明
+
+## 六、项目文件说明
+
+主要文件结构如下：
+
+```text
+Z-1/
+├─ mysite/
+├─ polls/
+│  ├─ management/commands/seed_polls.py
+│  ├─ migrations/
+│  ├─ static/polls/
+│  └─ templates/polls/
+├─ demo.md
+├─ README.md
+├─ README.en.md
+├─ LICENSE
+├─ manage.py
+└─ requirements.txt
+```
+
+## 七、当前可用账号
+
+- 后台用户名：`admin`
+- 后台密码：`Admin123456!`
+
+## 八、项目运行方式
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe manage.py migrate
+.\.venv\Scripts\python.exe manage.py seed_polls
+.\.venv\Scripts\python.exe manage.py runserver
+```
+
+运行后可访问：
+
+- 首页：`http://127.0.0.1:8000/`
+- 投票页：`http://127.0.0.1:8000/polls/`
+- 后台：`http://127.0.0.1:8000/admin/`
+
+## 九、总结
+
+本项目从 Django 官方 Tutorial 出发，完整实践了 Django Web 开发的基本流程，并在教程基础上进行了较大幅度的展示型升级。整个实践过程涵盖了从环境准备、项目初始化、应用开发、数据库迁移、后台管理、测试验证，到前端美化、双语支持、数据填充、文档整理、GitHub 发布等多个环节。
+
+通过本次项目实践，不仅完成了官方示例，也进一步提升了项目的完整性、可展示性和工程化程度。对于课程作业、项目答辩和技术总结而言，这样的结果更具有说服力和展示价值。
